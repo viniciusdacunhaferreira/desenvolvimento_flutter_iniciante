@@ -22,12 +22,18 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({super.key});
 
   @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  int counter = 0;
+
+  @override
   Widget build(BuildContext context) {
-    int counter = 0;
     return Column(
       // crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +58,9 @@ class Body extends StatelessWidget {
         SizedBox(height: 24),
         FilledButton(
           onPressed: () {
-            counter++;
+            setState(() {
+              counter++;
+            });
           },
           child: Text('Increment'),
         ),
