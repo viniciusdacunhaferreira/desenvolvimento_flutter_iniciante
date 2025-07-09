@@ -8,8 +8,9 @@ class PeopleListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Não vai dar não!
-    final people = peopleGen(100000);
+    final people = peopleGen(20);
     return ListView.builder(
+      padding: EdgeInsets.all(8),
       itemCount: people.length,
       itemBuilder: (context, index) => PersonListTile(person: people[index]),
     );
