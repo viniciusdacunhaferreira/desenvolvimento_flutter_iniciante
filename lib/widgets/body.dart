@@ -1,5 +1,4 @@
-import 'package:desenvolvimento_flutter_iniciante/models/person.dart';
-import 'package:desenvolvimento_flutter_iniciante/widgets/person_list_tile.dart';
+import 'package:desenvolvimento_flutter_iniciante/widgets/people_list_view.dart';
 import 'package:flutter/material.dart';
 
 class Body extends StatefulWidget {
@@ -10,16 +9,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  int counter = 0;
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        PersonListTile(
-          person: Person(id: 1, name: 'João da Silva', height: 172, weight: 80),
-        ),
-      ],
-    );
+    return PeopleListView();
   }
 }
