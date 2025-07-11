@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../extensions/build_context.dart';
+import '../routes/routes.dart';
 import '../widgets/people_list_view.dart';
-import 'new_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -13,10 +14,7 @@ class HomePage extends StatelessWidget {
       body: PeopleListView(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.navigate_next),
-        onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => NewPage()),
-          (route) => false,
-        ),
+        onPressed: () => context.pushNamed(Routes.newPage),
       ),
     );
   }

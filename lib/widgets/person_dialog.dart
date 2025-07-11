@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../extensions/build_context.dart';
 import '../models/person.dart';
 
 class PersonDialog extends StatelessWidget {
@@ -14,9 +15,7 @@ class PersonDialog extends StatelessWidget {
       content: Text(
         'Weight: ${person.weight} kg.\nHeight: ${person.height} cm.\nBMI: ${person.bmi.toStringAsFixed(1)} kg/m².',
       ),
-      actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: Text('Ok')),
-      ],
+      actions: [TextButton(onPressed: () => context.pop(), child: Text('Ok'))],
     );
   }
 }
