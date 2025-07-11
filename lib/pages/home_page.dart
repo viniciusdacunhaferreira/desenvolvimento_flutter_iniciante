@@ -13,8 +13,8 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(title: Text('Home')),
       body: PeopleListView(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.navigate_next),
-        onPressed: () => context.pushNamed(Routes.newPage),
+        child: Icon(Icons.add),
+        onPressed: () => context.pushNamed(Routes.addPersonPage),
       ),
     );
   }
