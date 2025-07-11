@@ -1,7 +1,8 @@
-import 'package:desenvolvimento_flutter_iniciante/mock/people_gen.dart';
-import 'package:desenvolvimento_flutter_iniciante/widgets/person_dialog.dart';
-import 'package:desenvolvimento_flutter_iniciante/widgets/person_list_tile.dart';
 import 'package:flutter/material.dart';
+
+import '../mock/people_gen.dart';
+import 'person_dialog.dart';
+import 'person_list_tile.dart';
 
 class PeopleListView extends StatelessWidget {
   const PeopleListView({super.key});
