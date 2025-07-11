@@ -1,5 +1,6 @@
-import 'package:desenvolvimento_flutter_iniciante/models/person.dart';
 import 'package:flutter/material.dart';
+
+import '../models/person.dart';
 
 class PersonDialog extends StatelessWidget {
   const PersonDialog({super.key, required this.person});
