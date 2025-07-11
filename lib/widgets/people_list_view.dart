@@ -5,14 +5,19 @@ import 'package:flutter/material.dart';
 class PeopleListView extends StatelessWidget {
   const PeopleListView({super.key});
 
+  static final people = peopleGen(2000);
+
   @override
   Widget build(BuildContext context) {
-    // Não vai dar não!
-    final people = peopleGen(20);
-    return ListView.builder(
+    return ListView.separated(
       padding: EdgeInsets.all(8),
       itemCount: people.length,
-      itemBuilder: (context, index) => PersonListTile(person: people[index]),
+      itemBuilder: (context, index) {
+        return PersonListTile(person: people[index], onTap: () => print('Tap'));
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return SizedBox(height: 8);
+      },
     );
   }
 }

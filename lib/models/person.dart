@@ -10,4 +10,6 @@ class Person {
   String name;
   int height;
   double weight;
+
+  double get bmi => weight / (height / 100 * height / 100);
 }
