@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-extension NavigatorExtension<T> on BuildContext {
-  Future<T?> pushNamed(String route) async =>
-      await Navigator.of(this).pushNamed(route);
+extension NavigatorExtension on BuildContext {
+  Future<T?> pushNamed<T extends Object?>(String route) {
+    return Navigator.of(this).pushNamed<T>(route);
+  }
 
-  void pop() => Navigator.of(this).pop();
+  void pop<T extends Object?>([T? result]) {
+    Navigator.of(this).pop<T>(result);
+  }
 }

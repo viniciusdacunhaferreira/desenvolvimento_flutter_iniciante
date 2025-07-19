@@ -1,4 +1,4 @@
 class Routes {
-  static String initialRoute = '/';
-  static String addPersonPage = '/add_person_page';
+  static const String initialRoute = '/';
+  static const String addPersonPage = '/add_person_page';
 }

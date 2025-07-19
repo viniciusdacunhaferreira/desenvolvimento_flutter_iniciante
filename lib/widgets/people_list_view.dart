@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 
-import '../mock/people_gen.dart';
+import '../models/person.dart';
 import 'person_dialog.dart';
 import 'person_list_tile.dart';
 
 class PeopleListView extends StatelessWidget {
-  const PeopleListView({super.key});
+  const PeopleListView({
+    super.key,
+    required this.people,
+    required this.onDelete,
+  });
 
-  static final people = peopleGen(2000);
+  final List<Person> people;
+  final void Function(Person) onDelete;
 
   @override
   Widget build(BuildContext context) {
+    if (people.isEmpty) {
+      return Center(
+        child: Text(
+          'No people, for now',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+      );
+    }
     return ListView.separated(
       padding: EdgeInsets.all(8),
       itemCount: people.length,
@@ -25,10 +38,11 @@ class PeopleListView extends StatelessWidget {
               context: context,
               barrierDismissible: false,
               builder: (context) {
-                return PersonDialog(person: person);
+                return PersonDialog(person: person, onDelete: onDelete);
               },
             );
           },
+          onDelete: onDelete,
         );
       },
       separatorBuilder: (BuildContext context, int index) {

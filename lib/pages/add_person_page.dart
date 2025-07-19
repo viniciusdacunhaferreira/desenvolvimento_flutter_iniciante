@@ -41,7 +41,7 @@ class _AddPersonPageState extends State<AddPersonPage> {
                   weight: double.tryParse(weightController.text) ?? 0,
                   height: int.tryParse(heightController.text) ?? 0,
                 );
-                context.pop();
+                context.pop<PersonDto>(personDto);
               }
             },
             child: Text('Save'),
