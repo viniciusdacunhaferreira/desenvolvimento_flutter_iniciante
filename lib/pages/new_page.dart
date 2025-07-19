@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../extensions/build_context.dart';
+
 class NewPage extends StatelessWidget {
   const NewPage({super.key});
 
@@ -9,7 +11,7 @@ class NewPage extends StatelessWidget {
       appBar: AppBar(title: Text('New Page')),
       body: Center(
         child: ElevatedButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           child: Text('Return'),
         ),
       ),
