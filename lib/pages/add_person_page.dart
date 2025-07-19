@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../extensions/build_context.dart';
 import '../models/person_dto.dart';
@@ -37,8 +38,8 @@ class _AddPersonPageState extends State<AddPersonPage> {
               if (formKey.currentState?.validate() ?? false) {
                 final personDto = PersonDto(
                   name: nameController.text,
-                  height: int.tryParse(heightController.text) ?? 0,
                   weight: double.tryParse(weightController.text) ?? 0,
+                  height: int.tryParse(heightController.text) ?? 0,
                 );
                 context.pop();
               }
@@ -48,7 +49,7 @@ class _AddPersonPageState extends State<AddPersonPage> {
         ],
         leading: IconButton(onPressed: context.pop, icon: Icon(Icons.close)),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Form(
           key: formKey,
@@ -73,30 +74,38 @@ class _AddPersonPageState extends State<AddPersonPage> {
               SizedBox(height: 16),
               TextFormField(
                 controller: weightController,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  label: Text('Weight'),
                   border: OutlineInputBorder(),
-                  suffix: Text('kg'),
+                  suffixText: 'kg',
+                  labelText: 'Weight',
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value?.isEmpty == true) return 'Invalid weight';
+                  if (double.tryParse(value!) == null) return 'Invalid weight';
                   return null;
                 },
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,1}')),
+                ],
               ),
               SizedBox(height: 16),
               TextFormField(
                 controller: heightController,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  label: Text('Height'),
                   border: OutlineInputBorder(),
-                  suffix: Text('cm'),
+                  suffixText: 'cm',
+                  labelText: 'Height',
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value?.isEmpty == true) return 'Invalid height';
+                  if (int.tryParse(value!) == null) return 'Invalid weight';
                   return null;
                 },
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
             ],
           ),
