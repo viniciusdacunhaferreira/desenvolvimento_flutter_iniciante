@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/people_controller.dart';
 import '../extensions/build_context.dart';
 import '../models/person.dart';
 import '../models/person_dto.dart';
@@ -14,12 +15,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final people = <Person>[];
+  final PeopleController peopleController = PeopleController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Home')),
-      body: PeopleListView(people: people, onDelete: _onDelete),
+      body: PeopleListView(
+        people: peopleController.people,
+        onDelete: _onDelete,
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
@@ -28,15 +33,7 @@ class _HomePageState extends State<HomePage> {
           );
           if (result != null) {
             setState(() {
-              final id = people.isEmpty ? 1 : people.last.id + 1;
-              people.add(
-                Person(
-                  id: id,
-                  name: result.name,
-                  height: result.height,
-                  weight: result.weight,
-                ),
-              );
+              peopleController.addPerson(result);
             });
           }
         },
@@ -46,7 +43,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onDelete(Person person) {
     setState(() {
-      people.remove(person);
+      peopleController.removePerson(person);
     });
   }
 }
