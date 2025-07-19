@@ -23,6 +23,7 @@ class PeopleListView extends StatelessWidget {
             print('Tap');
             showDialog(
               context: context,
+              barrierDismissible: false,
               builder: (context) {
                 return PersonDialog(person: person);
               },
