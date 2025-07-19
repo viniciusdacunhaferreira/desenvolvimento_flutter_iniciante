@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+
 import '../models/person.dart';
 import '../models/person_dto.dart';
 
-class PeopleController {
+class PeopleController extends ChangeNotifier {
   final _people = <Person>[];
 
   List<Person> get people => _people;
@@ -16,9 +18,11 @@ class PeopleController {
         weight: personDto.weight,
       ),
     );
+    notifyListeners();
   }
 
   void removePerson(Person person) {
     _people.remove(person);
+    notifyListeners();
   }
 }

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+import '../controllers/people_controller.dart';
 import '../extensions/build_context.dart';
 import '../models/person.dart';
 
 class PersonDialog extends StatelessWidget {
-  const PersonDialog({super.key, required this.person, required this.onDelete});
+  const PersonDialog({super.key, required this.person});
 
   final Person person;
-  final void Function(Person) onDelete;
 
   @override
   Widget build(BuildContext context) {
+    final peopleController = GetIt.instance<PeopleController>();
+
     return AlertDialog(
       title: Text(person.name),
       content: Text(
@@ -19,7 +22,7 @@ class PersonDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            onDelete(person);
+            peopleController.removePerson(person);
             context.pop();
           },
           child: Text('Delete'),

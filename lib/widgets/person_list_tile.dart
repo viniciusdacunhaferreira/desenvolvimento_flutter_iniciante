@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
+import '../controllers/people_controller.dart';
 import '../models/person.dart';
 
 class PersonListTile extends StatelessWidget {
-  const PersonListTile({
-    super.key,
-    required this.person,
-    required this.onTap,
-    required this.onDelete,
-  });
+  PersonListTile({super.key, required this.person, required this.onTap});
 
   final Person person;
   final VoidCallback onTap;
-  final void Function(Person) onDelete;
+
+  final peopleController = GetIt.instance<PeopleController>();
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +82,10 @@ class PersonListTile extends StatelessWidget {
         globalPosition.dy,
       ),
       items: [
-        PopupMenuItem(child: Text('Delete'), onTap: () => onDelete(person)),
+        PopupMenuItem(
+          child: Text('Delete'),
+          onTap: () => peopleController.removePerson(person),
+        ),
       ],
     );
   }

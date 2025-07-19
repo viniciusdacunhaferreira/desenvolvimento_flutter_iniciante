@@ -5,14 +5,9 @@ import 'person_dialog.dart';
 import 'person_list_tile.dart';
 
 class PeopleListView extends StatelessWidget {
-  const PeopleListView({
-    super.key,
-    required this.people,
-    required this.onDelete,
-  });
+  const PeopleListView({super.key, required this.people});
 
   final List<Person> people;
-  final void Function(Person) onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +28,14 @@ class PeopleListView extends StatelessWidget {
         return PersonListTile(
           person: person,
           onTap: () {
-            print('Tap');
             showDialog(
               context: context,
               barrierDismissible: false,
               builder: (context) {
-                return PersonDialog(person: person, onDelete: onDelete);
+                return PersonDialog(person: person);
               },
             );
           },
-          onDelete: onDelete,
         );
       },
       separatorBuilder: (BuildContext context, int index) {
