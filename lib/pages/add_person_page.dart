@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 
+import '../controllers/people_controller.dart';
 import '../extensions/build_context.dart';
 import '../models/person_dto.dart';
 
@@ -17,6 +19,8 @@ class _AddPersonPageState extends State<AddPersonPage> {
   final weightController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+
+  final peopleController = GetIt.instance<PeopleController>();
 
   @override
   void dispose() {
@@ -41,7 +45,8 @@ class _AddPersonPageState extends State<AddPersonPage> {
                   weight: double.tryParse(weightController.text) ?? 0,
                   height: int.tryParse(heightController.text) ?? 0,
                 );
-                context.pop<PersonDto>(personDto);
+                peopleController.addPerson(personDto);
+                context.pop();
               }
             },
             child: Text('Save'),
