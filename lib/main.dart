@@ -5,5 +5,5 @@ import 'my_app.dart';
 
 void main() {
   injector();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
