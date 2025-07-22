@@ -30,7 +30,12 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void _onMessage() => print(peopleController.message.value);
+  void _onMessage() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(peopleController.message.value)));
+  }
 
   @override
   Widget build(BuildContext context) {
