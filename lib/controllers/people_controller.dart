@@ -8,6 +8,8 @@ class PeopleController extends ChangeNotifier {
 
   List<Person> get people => _people;
 
+  final message = ValueNotifier<String>("");
+
   void addPerson(PersonDto personDto) {
     final id = _people.isEmpty ? 1 : _people.last.id + 1;
     _people.add(
@@ -18,11 +20,13 @@ class PeopleController extends ChangeNotifier {
         weight: personDto.weight,
       ),
     );
+    message.value = "Person #$id added successfully.";
     notifyListeners();
   }
 
   void removePerson(Person person) {
     _people.remove(person);
+    message.value = "Person #${person.id} removed successfully.";
     notifyListeners();
   }
 }

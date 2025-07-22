@@ -7,11 +7,30 @@ import '../extensions/build_context.dart';
 import '../routes/routes.dart';
 import '../widgets/people_list_view.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final peopleController = GetIt.instance<PeopleController>();
   final themeController = GetIt.instance<ThemeController>();
+
+  @override
+  void initState() {
+    peopleController.message.addListener(_onMessage);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    peopleController.message.addListener(_onMessage);
+    super.dispose();
+  }
+
+  void _onMessage() => print(peopleController.message.value);
 
   @override
   Widget build(BuildContext context) {
