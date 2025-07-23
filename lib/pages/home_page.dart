@@ -5,6 +5,7 @@ import '../controllers/people_controller.dart';
 import '../controllers/theme_controller.dart';
 import '../extensions/build_context.dart';
 import '../routes/routes.dart';
+import '../states/people_operation_state.dart';
 import '../widgets/people_list_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,10 +32,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onMessage() {
+    PeopleOperationState operationState = peopleController.message.value;
+
     ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(peopleController.message.value)));
+    switch (operationState) {
+      case SuccessPeopleOperationState():
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(operationState.message)));
+      case ErrorPeopleOperationState():
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              operationState.error.toString(),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onErrorContainer,
+              ),
+            ),
+            backgroundColor: Theme.of(context).colorScheme.errorContainer,
+          ),
+        );
+    }
   }
 
   @override
