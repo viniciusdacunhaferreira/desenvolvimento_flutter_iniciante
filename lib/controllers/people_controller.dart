@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../models/person.dart';
 import '../models/person_dto.dart';
+import '../services/api/api_client.dart';
 import '../states/people_operation_state.dart';
 
 class PeopleController extends ChangeNotifier {
-  final _people = <Person>[];
+  List<Person> _people = [];
 
   List<Person> get people => _people;
 
@@ -13,12 +14,24 @@ class PeopleController extends ChangeNotifier {
     IdlePeopleOperationState(),
   );
 
+  final ApiClient apiClient = ApiClient();
+
+  void getPeople() async {
+    try {
+      List<Person> result = await apiClient.getPeople();
+      _people = result;
+      notifyListeners();
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+
   void addPerson(PersonDto personDto) {
     try {
-      final id = _people.isEmpty ? 1 : _people.last.id + 1;
+      final id = _people.isEmpty ? 1 : int.tryParse(_people.last.id) ?? 0 + 1;
       _people.add(
         Person(
-          id: id,
+          id: id.toString(),
           name: personDto.name,
           height: personDto.height,
           weight: personDto.weight,

@@ -6,7 +6,7 @@ class Person {
     required this.weight,
   });
 
-  int id;
+  String id;
   String name;
   int height;
   double weight;

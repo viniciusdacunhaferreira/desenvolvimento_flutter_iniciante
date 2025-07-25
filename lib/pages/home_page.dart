@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    peopleController.getPeople();
     peopleController.message.addListener(_onMessage);
     super.initState();
   }
