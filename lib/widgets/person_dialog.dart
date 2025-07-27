@@ -21,9 +21,9 @@ class PersonDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          onPressed: () {
-            peopleController.removePerson(person);
-            context.pop();
+          onPressed: () async {
+            await peopleController.removePerson(person);
+            if (context.mounted) context.pop();
           },
           child: Text('Delete'),
         ),

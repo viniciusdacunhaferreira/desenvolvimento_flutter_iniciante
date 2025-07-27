@@ -38,4 +38,14 @@ class ApiClient {
 
     throw Exception('Invalid status code');
   }
+
+  Future<void> deletePerson(Person person) async {
+    final Response response = await client.delete(
+      'http://localhost:3000/person/${person.id}',
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Invalid status code');
+    }
+  }
 }

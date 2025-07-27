@@ -27,9 +27,10 @@ class PeopleController extends ChangeNotifier {
       notifyListeners();
     } on Exception catch (e) {
       print(e);
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
-    isLoading = false;
-    notifyListeners();
   }
 
   Future<void> addPerson(PersonDto personDto) async {
@@ -39,22 +40,23 @@ class PeopleController extends ChangeNotifier {
       message.value = SuccessPeopleOperationState(
         "Person #${result.id} added successfully.",
       );
-      notifyListeners();
     } on Exception catch (e) {
       message.value = ErrorPeopleOperationState(e);
+    } finally {
       notifyListeners();
     }
   }
 
-  void removePerson(Person person) {
+  Future<void> removePerson(Person person) async {
     try {
+      await apiClient.deletePerson(person);
       _people.remove(person);
       message.value = SuccessPeopleOperationState(
         "Person #${person.id} removed successfully.",
       );
-      notifyListeners();
     } on Exception catch (e) {
       message.value = ErrorPeopleOperationState(e);
+    } finally {
       notifyListeners();
     }
   }
