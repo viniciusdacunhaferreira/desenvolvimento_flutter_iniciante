@@ -16,7 +16,11 @@ class PeopleController extends ChangeNotifier {
 
   final ApiClient apiClient = ApiClient();
 
-  void getPeople() async {
+  bool isLoading = false;
+
+  Future<void> getPeople() async {
+    isLoading = true;
+    notifyListeners();
     try {
       List<Person> result = await apiClient.getPeople();
       _people = result;
@@ -24,21 +28,16 @@ class PeopleController extends ChangeNotifier {
     } on Exception catch (e) {
       print(e);
     }
+    isLoading = false;
+    notifyListeners();
   }
 
-  void addPerson(PersonDto personDto) {
+  Future<void> addPerson(PersonDto personDto) async {
     try {
-      final id = _people.isEmpty ? 1 : int.tryParse(_people.last.id) ?? 0 + 1;
-      _people.add(
-        Person(
-          id: id.toString(),
-          name: personDto.name,
-          height: personDto.height,
-          weight: personDto.weight,
-        ),
-      );
+      Person result = await apiClient.postPerson(personDto);
+      _people.add(result);
       message.value = SuccessPeopleOperationState(
-        "Person #$id added successfully.",
+        "Person #${result.id} added successfully.",
       );
       notifyListeners();
     } on Exception catch (e) {

@@ -81,9 +81,14 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListenableBuilder(
         listenable: peopleController,
-        builder: (context, _) {
-          return PeopleListView(people: peopleController.people);
+        builder: (context, child) {
+          if (peopleController.isLoading) {
+            return child!;
+          } else {
+            return PeopleListView(people: peopleController.people);
+          }
         },
+        child: Center(child: CircularProgressIndicator()),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
