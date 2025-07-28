@@ -18,9 +18,9 @@ class ApiClient {
           .toList();
 
       return people;
+    } else {
+      throw Exception('Invalid status code');
     }
-
-    throw Exception('Invalid status code');
   }
 
   Future<Person> postPerson(PersonDto personDto) async {
@@ -34,9 +34,9 @@ class ApiClient {
       final Person people = Person.fromMap(data);
 
       return people;
+    } else {
+      throw Exception('Invalid status code');
     }
-
-    throw Exception('Invalid status code');
   }
 
   Future<void> deletePerson(Person person) async {
@@ -45,6 +45,22 @@ class ApiClient {
     );
 
     if (response.statusCode != 200) {
+      throw Exception('Invalid status code');
+    }
+  }
+
+  Future<Person> putPerson(Person person) async {
+    final Response response = await client.put(
+      'http://localhost:3000/person/${person.id}',
+      data: person.toMap(),
+    );
+
+    if (response.statusCode == 200) {
+      final data = response.data as Map<String, dynamic>;
+      final Person people = Person.fromMap(data);
+
+      return people;
+    } else {
       throw Exception('Invalid status code');
     }
   }
