@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../controllers/people_controller.dart';
+import '../extensions/build_context.dart';
 import '../models/person.dart';
+import '../routes/routes.dart';
 
 class PersonListTile extends StatelessWidget {
   PersonListTile({super.key, required this.person, required this.onTap});
@@ -85,6 +87,11 @@ class PersonListTile extends StatelessWidget {
         PopupMenuItem(
           child: Text('Delete'),
           onTap: () => peopleController.removePerson(person),
+        ),
+        PopupMenuItem(
+          onTap: () =>
+              context.pushNamed(Routes.personEditorPage, arguments: person),
+          child: Text('Edit'),
         ),
       ],
     );

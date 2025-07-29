@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => context.pushNamed(Routes.addPersonPage),
+        onPressed: () => context.pushNamed(Routes.personEditorPage),
       ),
     );
   }

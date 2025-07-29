@@ -30,4 +30,13 @@ class Person {
       weight: (map['weight'] as num).toDouble(),
     );
   }
+
+  Person copyWith({String? id, String? name, int? height, double? weight}) {
+    return Person(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
+    );
+  }
 }

@@ -4,16 +4,17 @@ import 'package:get_it/get_it.dart';
 
 import '../controllers/people_controller.dart';
 import '../extensions/build_context.dart';
+import '../models/person.dart';
 import '../models/person_dto.dart';
 
-class AddPersonPage extends StatefulWidget {
-  const AddPersonPage({super.key});
+class PersonEditorPage extends StatefulWidget {
+  const PersonEditorPage({super.key});
 
   @override
-  State<AddPersonPage> createState() => _AddPersonPageState();
+  State<PersonEditorPage> createState() => _PersonEditorPageState();
 }
 
-class _AddPersonPageState extends State<AddPersonPage> {
+class _PersonEditorPageState extends State<PersonEditorPage> {
   final nameController = TextEditingController();
   final heightController = TextEditingController();
   final weightController = TextEditingController();
@@ -21,6 +22,24 @@ class _AddPersonPageState extends State<AddPersonPage> {
   final formKey = GlobalKey<FormState>();
 
   final peopleController = GetIt.instance<PeopleController>();
+
+  bool editorMode = false;
+
+  Person? person;
+
+  @override
+  void didChangeDependencies() {
+    person = ModalRoute.of(context)!.settings.arguments as Person?;
+
+    if (person != null) {
+      editorMode = true;
+      nameController.text = person!.name;
+      heightController.text = person!.height.toString();
+      weightController.text = person!.weight.toString();
+    }
+
+    super.didChangeDependencies();
+  }
 
   @override
   void dispose() {
@@ -35,18 +54,28 @@ class _AddPersonPageState extends State<AddPersonPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Person'),
+        title: Text(!editorMode ? 'Add Person' : "Edit Person"),
         actions: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (formKey.currentState?.validate() ?? false) {
-                final personDto = PersonDto(
-                  name: nameController.text,
-                  weight: double.tryParse(weightController.text) ?? 0,
-                  height: int.tryParse(heightController.text) ?? 0,
-                );
-                peopleController.addPerson(personDto);
-                context.pop();
+                if (!editorMode) {
+                  final personDto = PersonDto(
+                    name: nameController.text,
+                    weight: double.tryParse(weightController.text) ?? 0,
+                    height: int.tryParse(heightController.text) ?? 0,
+                  );
+                  await peopleController.addPerson(personDto);
+                  if (context.mounted) context.pop();
+                } else {
+                  final editedPerson = person!.copyWith(
+                    name: nameController.text,
+                    weight: double.tryParse(weightController.text) ?? 0,
+                    height: int.tryParse(heightController.text) ?? 0,
+                  );
+                  await peopleController.editPerson(editedPerson);
+                  if (context.mounted) context.pop();
+                }
               }
             },
             child: Text('Save'),

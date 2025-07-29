@@ -60,4 +60,22 @@ class PeopleController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> editPerson(Person person) async {
+    try {
+      Person result = await apiClient.putPerson(person);
+
+      final index = _people.indexWhere((e) => e.id == person.id);
+
+      _people[index] = result;
+
+      message.value = SuccessPeopleOperationState(
+        "Person #${result.id} updated successfully.",
+      );
+    } on Exception catch (e) {
+      message.value = ErrorPeopleOperationState(e);
+    } finally {
+      notifyListeners();
+    }
+  }
 }
