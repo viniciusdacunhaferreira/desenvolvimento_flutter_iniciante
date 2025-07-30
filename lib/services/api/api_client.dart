@@ -4,10 +4,13 @@ import '../../models/person.dart';
 import '../../models/person_dto.dart';
 
 class ApiClient {
-  final Dio client = Dio();
+  ApiClient({required this.client, required this.url});
+
+  final Dio client;
+  final String url;
 
   Future<List<Person>> getPeople() async {
-    final Response response = await client.get('http://localhost:3000/person/');
+    final Response response = await client.get('$url/person/');
 
     await Future.delayed(Duration(seconds: 5));
 
@@ -25,7 +28,7 @@ class ApiClient {
 
   Future<Person> postPerson(PersonDto personDto) async {
     final Response response = await client.post(
-      'http://localhost:3000/person/',
+      '$url/person/',
       data: personDto.toMap(),
     );
 
@@ -40,9 +43,7 @@ class ApiClient {
   }
 
   Future<void> deletePerson(Person person) async {
-    final Response response = await client.delete(
-      'http://localhost:3000/person/${person.id}',
-    );
+    final Response response = await client.delete('$url/person/${person.id}');
 
     if (response.statusCode != 200) {
       throw Exception('Invalid status code');
@@ -51,7 +52,7 @@ class ApiClient {
 
   Future<Person> putPerson(Person person) async {
     final Response response = await client.put(
-      'http://localhost:3000/person/${person.id}',
+      '$url/person/${person.id}',
       data: person.toMap(),
     );
 

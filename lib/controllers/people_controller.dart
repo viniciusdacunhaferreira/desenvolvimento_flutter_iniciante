@@ -6,6 +6,8 @@ import '../services/api/api_client.dart';
 import '../states/people_operation_state.dart';
 
 class PeopleController extends ChangeNotifier {
+  PeopleController(this.apiClient);
+
   List<Person> _people = [];
 
   List<Person> get people => _people;
@@ -14,7 +16,7 @@ class PeopleController extends ChangeNotifier {
     IdlePeopleOperationState(),
   );
 
-  final ApiClient apiClient = ApiClient();
+  final ApiClient apiClient;
 
   bool isLoading = false;
 
@@ -26,7 +28,7 @@ class PeopleController extends ChangeNotifier {
       _people = result;
       notifyListeners();
     } on Exception catch (e) {
-      print(e);
+      message.value = ErrorPeopleOperationState(e);
     } finally {
       isLoading = false;
       notifyListeners();
